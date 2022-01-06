@@ -31,6 +31,7 @@
         <springfox.boot.starter.version>3.0.0</springfox.boot.starter.version>
         <jwt.version>0.9.0</jwt.version>
         <mybatisplus.version>3.3.1</mybatisplus.version>
+        <swagger.version>2.9.2</swagger.version>
         <!--跳过单元测试-->
         <skipTests>true</skipTests>
     </properties>
@@ -108,7 +109,7 @@
                 <version>${springfox.boot.starter.version}</version>
             </dependency>
 
-
+            <!--Token生成与解析-->
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>
                 <artifactId>jjwt</artifactId>
@@ -140,6 +141,55 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-security</artifactId>
+            </dependency>
+
+            <!-- swagger2-->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>io.swagger</groupId>
+                        <artifactId>swagger-annotations</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>io.swagger</groupId>
+                        <artifactId>swagger-models</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <!--防止进入swagger页面报类型转换错误，排除2.9.2中的引用，手动增加1.5.21版本-->
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>1.5.21</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-models</artifactId>
+                <version>1.5.21</version>
+            </dependency>
+
+            <!-- swagger2-UI-->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>swagger-bootstrap-ui</artifactId>
+                <version>1.9.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>1.9.6</version>
             </dependency>
 
         </dependencies>

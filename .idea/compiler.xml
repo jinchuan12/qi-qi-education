@@ -2,17 +2,33 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="qi-qi-education-model" />
+        <module name="common-util" />
         <module name="qi-qi-education-gateway" />
-        <module name="qi-qi-education-product-service" />
-        <module name="qi-qi-education-order-service" />
-        <module name="qi-qi-education-common" />
-        <module name="qi-qi-education-user-service" />
-        <module name="qi-qi-education-coupon-service" />
+        <module name="service-util" />
+        <module name="admin-service" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="qi-qi-education-admin-service" target="8" />
+      <module name="qi-qi-education-coupon-service" target="8" />
+      <module name="qi-qi-education-order-service" target="8" />
+      <module name="qi-qi-education-product-service" target="8" />
+      <module name="qi-qi-education-user-service" target="8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="admin-service" options="-parameters" />
+      <module name="common-util" options="-parameters" />
+      <module name="qi-qi-education-gateway" options="-parameters" />
+      <module name="qi-qi-education-model" options="-parameters" />
+      <module name="service-util" options="-parameters" />
+    </option>
   </component>
 </project>

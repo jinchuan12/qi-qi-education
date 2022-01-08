@@ -3,6 +3,11 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.1.RELEASE</version>
+    </parent>
 
     <groupId>net.qiqieducation</groupId>
     <artifactId>qi-qi-education</artifactId>
@@ -10,172 +15,66 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>qi-qi-education-common</module>
-        <module>qi-qi-education-product-service</module>
-        <module>qi-qi-education-user-service</module>
-        <module>qi-qi-education-order-service</module>
-        <module>qi-qi-education-coupon-service</module>
         <module>qi-qi-education-gateway</module>
+        <module>qi-qi-education-model</module>
+        <module>qi-qi-education-service</module>
     </modules>
 
     <properties>
         <java.version>1.8</java.version>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <spring.boot.version>2.3.3.RELEASE</spring.boot.version>
-        <spring.cloud.version>Hoxton.SR8</spring.cloud.version>
-        <alibaba.cloud.version>2.2.1.RELEASE</alibaba.cloud.version>
-        <mybatisplus.boot.starter.version>3.4.0</mybatisplus.boot.starter.version>
-        <lombok.version>1.18.16</lombok.version>
-        <commons.lang3.version>3.9</commons.lang3.version>
-        <commons.codec.version>1.15</commons.codec.version>
-        <springfox.boot.starter.version>3.0.0</springfox.boot.starter.version>
-        <jwt.version>0.9.0</jwt.version>
-        <mybatisplus.version>3.3.1</mybatisplus.version>
-        <swagger.version>2.9.2</swagger.version>
-        <mysql.version>5.1.47</mysql.version>
-        <!--跳过单元测试-->
-        <skipTests>true</skipTests>
+        <cloud.version>Hoxton.RELEASE</cloud.version>
+        <alibaba.version>2.2.0.RELEASE</alibaba.version>
+        <mybatis-plus.version>3.3.1</mybatis-plus.version>
+        <mysql.version>5.1.46</mysql.version>
+        <swagger.version>2.7.0</swagger.version>
+        <jwt.version>0.7.0</jwt.version>
+        <fastjson.version>1.2.29</fastjson.version>
+        <httpclient.version>4.5.1</httpclient.version>
+        <easyexcel.version>2.2.0-beta2</easyexcel.version>
+        <aliyun.version>4.1.1</aliyun.version>
+        <oss.version>3.9.1</oss.version>
+        <jodatime.version>2.10.1</jodatime.version>
     </properties>
 
-    <!--子模块继承之后，提供作用：锁定版本+子modlue不用写groupId和version-->
+    <!--配置dependencyManagement锁定依赖的版本-->
     <dependencyManagement>
         <dependencies>
-            <!--https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies/2.3.3.RELEASE-->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring.boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <!--https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies/Hoxton.SR8-->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring.cloud.version}</version>
+                <version>${cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
 
-            <!--https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-alibaba-dependencies/2.2.1.RELEASE-->
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>${alibaba.cloud.version}</version>
+                <version>${alibaba.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
 
-
-
-            <!--mybatis plus和springboot整合-->
+            <!--mybatis-plus 持久层-->
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>${mybatisplus.boot.starter.version}</version>
-            </dependency>
-
-            <!--https://mvnrepository.com/artifact/org.projectlombok/lombok/1.18.16-->
-            <!--scope=provided，说明它只在编译阶段生效，不需要打入包中, Lombok在编译期将带Lombok注解的Java文件正确编译为完整的Class文件-->
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>${lombok.version}</version>
-                <scope>provided</scope>
-            </dependency>
-
-
-
-            <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-lang3</artifactId>
-                <version>${commons.lang3.version}</version>
-            </dependency>
-
-            <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
-            <!--用于加密-->
-            <dependency>
-                <groupId>commons-codec</groupId>
-                <artifactId>commons-codec</artifactId>
-                <version>${commons.codec.version}</version>
-            </dependency>
-
-
-
-            <!--接口文档依赖-->
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-boot-starter</artifactId>
-                <version>${springfox.boot.starter.version}</version>
-            </dependency>
-
-            <!--Token生成与解析-->
-            <dependency>
-                <groupId>io.jsonwebtoken</groupId>
-                <artifactId>jjwt</artifactId>
-                <version>${jwt.version}</version>
+                <version>${mybatis-plus.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>${mybatisplus.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-extension</artifactId>
-                <version>${mybatisplus.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-generator</artifactId>
-                <version>${mybatisplus.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-dts</artifactId>
-                <version>${mybatisplus.version}</version>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
             </dependency>
 
-            <!-- spring security 安全认证 -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-security</artifactId>
-            </dependency>
-
-            <!-- swagger2-->
+            <!--swagger-->
             <dependency>
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger2</artifactId>
                 <version>${swagger.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>io.swagger</groupId>
-                        <artifactId>swagger-annotations</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>io.swagger</groupId>
-                        <artifactId>swagger-models</artifactId>
-                    </exclusion>
-                </exclusions>
             </dependency>
-
-            <!--防止进入swagger页面报类型转换错误，排除2.9.2中的引用，手动增加1.5.21版本-->
-            <dependency>
-                <groupId>io.swagger</groupId>
-                <artifactId>swagger-annotations</artifactId>
-                <version>1.5.21</version>
-            </dependency>
-
-            <dependency>
-                <groupId>io.swagger</groupId>
-                <artifactId>swagger-models</artifactId>
-                <version>1.5.21</version>
-            </dependency>
-
-            <!-- swagger2-UI-->
+            <!--swagger ui-->
             <dependency>
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger-ui</artifactId>
@@ -183,71 +82,47 @@
             </dependency>
 
             <dependency>
-                <groupId>com.github.xiaoymin</groupId>
-                <artifactId>swagger-bootstrap-ui</artifactId>
-                <version>1.9.2</version>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jwt.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-spring-boot-starter</artifactId>
-                <version>1.9.6</version>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${httpclient.version}</version>
             </dependency>
 
-            <!-- Mysql驱动包 -->
             <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <version>${mysql.version}</version>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>easyexcel</artifactId>
+                <version>${easyexcel.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>aliyun-java-sdk-core</artifactId>
+                <version>${aliyun.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.aliyun.oss</groupId>
+                <artifactId>aliyun-sdk-oss</artifactId>
+                <version>${oss.version}</version>
+            </dependency>
+
+            <!--日期时间工具-->
+            <dependency>
+                <groupId>joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>${jodatime.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <!-- 代码库 -->
-    <repositories>
-        <repository>
-            <id>maven-ali</id>
-            <url>http://maven.aliyun.com/nexus/content/groups/public//</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-                <checksumPolicy>fail</checksumPolicy>
-            </snapshots>
-        </repository>
-    </repositories>
-
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>public</id>
-            <name>aliyun nexus</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
-
-    <!--module不用添加打包版本信息-->
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring.boot.version}</version>
-                <configuration>
-                    <fork>true</fork>
-                    <addResources>true</addResources>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-
 </project>

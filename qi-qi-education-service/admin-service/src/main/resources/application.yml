@@ -1,0 +1,14 @@
+server:
+  port: 8801
+
+  #mysql连接
+spring:
+  application:
+    name: cloud-payment-service
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver              # mysql驱动包 com.mysql.jdbc.Driver
+    url: jdbc:mysql://119.45.106.229:3306/qiqi_admin?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: root
+mybatis-plus:
+  mapper-locations: classpath:com/qiqi/mapper/xml/*.xml
